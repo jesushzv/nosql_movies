@@ -1,21 +1,17 @@
-const Movie = require('./model');
-const connectDb = require('./db');
-connectDb()
-const createMovie = async () =>{
-    const movie = await Movie.create({
-        name: 'The Godfather',
-        rating: 9.2,
-        release_year: 1972,
-        box_office: 120000000
-    });
-    await movie.save((err, movie) => {
-        if(err){
-            console.error(err)}
-        else{
-            console.log(movie);
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const session = require('express-session');
 
-        }
-    });
-}
+app.use(cors());
+app.use(bodyParser.json());
+app.use(session({
+    secret: 'secret',
+    saveUninitialized: true,
+    resave: true
+}));
 
-createMovie();
+app.listen(process.env.PORT || 3000, () => {
+    console.log('Server started on port 3000');
+})
