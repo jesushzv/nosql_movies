@@ -2,13 +2,13 @@ const router = require('express').Router();
 const Movie = require('./model');
 
 //GET MOVIES
-router.get('/all', async (req,res)=> {
-    const movies = await Movie.findAll();
+router.get('/movies', async (req,res)=> {
+    const movies = await Movie.find();
     res.send(movies)
 })
 
 //POST MOVIE
-router.post('/', async (req,res)=> {
+router.post('/movies', async (req,res)=> {
     const movie = await Movie.create({
         name: req.body.name,
         rating: req.body.rating,
@@ -20,7 +20,7 @@ router.post('/', async (req,res)=> {
 })
 
 //UPDATE A MOVIE
-router.put('/', async (req,res)=>{
+router.put('/movies', async (req,res)=>{
 
     Movie.update({
         name: req.body.name,

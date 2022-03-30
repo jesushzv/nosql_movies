@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const connectDb = require('./db');
+
+//Database Connection
+connectDb();
 
 // Middleware
 app.use(cors());
@@ -41,8 +45,6 @@ app.get('/validate', authToken , (req, res) => {
     });
 })
 
-<<<<<<< HEAD
-var session;
 // Create session
 app.get('/',(req, res) => {
     session = req.session;
@@ -56,9 +58,8 @@ app.get('/logout', (req, res) => {
     });
     res.redirect('/');
 })
-=======
+
 app.use("/api", require("./routes"));
->>>>>>> b37d2e479aa77be999ecef03b83972c59893bd16
 
 app.listen(process.env.PORT || 3000, () => {
     console.log('Server started on port 3000');
