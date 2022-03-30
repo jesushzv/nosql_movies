@@ -41,6 +41,8 @@ app.get('/', authToken , (req, res) => {
     });
 })
 
+app.use("/api", require("./routes"));
+
 app.listen(process.env.PORT || 3000, () => {
     console.log('Server started on port 3000');
 })
