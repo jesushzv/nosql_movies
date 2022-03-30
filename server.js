@@ -22,7 +22,7 @@ app.use(session({
 
 //Token generation
 const genToken = require('./genToken');
-app.post('/auth',(req, res) => {
+app.post('/token',(req, res) => {
     const { username, password } = req.body;
     const user = {username: username, password: password};
     const token = genToken(user)
@@ -34,11 +34,26 @@ app.post('/auth',(req, res) => {
 
 // Token validation
 const authToken = require('./authToken');
-app.get('/', authToken , (req, res) => {
+app.get('/validate', authToken , (req, res) => {
     res.json({
         message: 'You are authenticated',
         body: req.user
     });
+})
+
+var session;
+// Create session
+app.get('/',(req, res) => {
+    session = req.session;
+})
+
+// Destroy session
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.json({
+        message: 'Logged out'
+    });
+    res.redirect('/');
 })
 
 app.listen(process.env.PORT || 3000, () => {
