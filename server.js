@@ -3,14 +3,20 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
+// Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(session({
     secret: 'secret',
     saveUninitialized: true,
-    resave: true
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }  ,
+    resave: false
 }));
 
 

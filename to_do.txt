@@ -1,2 +1,13 @@
 - Don't allow movie replication
 - Add routes
+
+
+- Routes to do
+  - GET:
+    - /movies => list all movies
+    - /movies/:id
+    - /users => list all users
+    - /users/:id
+  - POST:
+    - /movies => create a movie
+    - /users => create a user
