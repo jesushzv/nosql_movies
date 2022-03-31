@@ -7,10 +7,10 @@ router.get('/users', async (req,res)=> {
     res.send(user)
 })
 
-//GET USERS
+//GET USERS BY ID
 router.get('/:id', async (req,res)=> {
     const user = await User.findById();
-    res.send(user.username);
+    res.send(user);
 })
 
 
