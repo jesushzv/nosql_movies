@@ -46,7 +46,7 @@ app.get('/validate', authToken , (req, res) => {
 })
 
 // Create session
-app.get('/',(req, res) => {
+app.get('/login',(req, res) => {
     session = req.session;
 })
 

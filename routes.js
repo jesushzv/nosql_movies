@@ -9,6 +9,12 @@ router.get('/movies', async (req,res)=> {
 
 //POST MOVIE
 router.post('/movies', async (req,res)=> {
+
+    session = req.session;
+    if (!session.user) {
+        res.status(401).send('Unauthorized');
+    }
+
     const movie = await Movie.create({
         name: req.body.name,
         rating: req.body.rating,
