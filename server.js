@@ -60,7 +60,7 @@ app.get('/logout', (req, res) => {
 })
 
 app.use("/api", require("./routes"));
-app.use("/users/user", require("./userRoutes"));
+app.use("/users", require("./userRoutes"));
 
 app.listen(process.env.PORT || 3000, () => {
     console.log('Server started on port 3000');
