@@ -16,6 +16,7 @@ router.get('/:id', async (req,res)=> {
 
 //CREATE USER
 router.post('/createUser', async (req,res)=> {
+
     const user = await User.create({
         name: req.body.name,
         lastname: req.body.lastname,
@@ -23,10 +24,14 @@ router.post('/createUser', async (req,res)=> {
         email: req.body.email,
         password: req.body.password
     });
-    if(user.find({email: req.body.email} || user.find({username: req.body.username}))){
+    if(User.findOne({email: req.body.email} || User.findOne({username: req.body.username}))){
         res.status(400).send("User already exists")
     }
-    res.send(user);
+    else{
+        user.save();
+        req.session.user = user;
+        res.send(user);
+    }
 })
 
 //UPDATE A USER

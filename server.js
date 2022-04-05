@@ -59,6 +59,14 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 })
 
+// Index
+app.get('/', (req, res) => {
+    req.session.user = {
+        username: 'jh',
+    }
+    res.send('Hello World');
+});
+
 app.use("/api", require("./routes"));
 app.use("/users", require("./userRoutes"));
 
