@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
-    secret: 'secret',
+    secret: process.env.SESSION_SECRET,
     saveUninitialized: true,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7
@@ -23,52 +23,14 @@ app.use(session({
     resave: false
 }));
 
-
-//Token generation
-const genToken = require('./genToken');
-app.post('/token',(req, res) => {
-    const { username, password } = req.body;
-    const user = {username: username, password: password};
-    const token = genToken(user)
-    res.header('authorization', token).json({
-        message: 'Token generated',
-        token: token
-    });
-})
-
-// Token validation
-const authToken = require('./authToken');
-app.get('/validate', authToken , (req, res) => {
-    res.json({
-        message: 'You are authenticated',
-        body: req.user
-    });
-})
-
-// Create session
-app.get('/login',(req, res) => {
-    session = req.session;
-})
-
-// Destroy session
-app.get('/logout', (req, res) => {
-    req.session.destroy();
-    res.json({
-        message: 'Logged out'
-    });
-    res.redirect('/');
-})
-
 // Index
 app.get('/', (req, res) => {
-    req.session.user = {
-        username: 'jh',
-    }
-    res.send('Hello World');
+    res.send('MOVIES SERVICE API by jesushsv & gilbertosantana24');
 });
 
-app.use("/api", require("./routes"));
-app.use("/users", require("./userRoutes"));
+app.use("/api", require("./routes/movieRoutes"));
+app.use("/users", require("./routes/userRoutes"));
+app.use("/login", require("./routes/loginRoutes"));
 
 app.listen(process.env.PORT || 3000, () => {
     console.log('Server started on port 3000');

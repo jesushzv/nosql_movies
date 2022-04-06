@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Movie = require("./model");
+const Movie = require("../models/movieModel");
 
 //GET MOVIES
 router.get("/movies", async (req, res) => {

@@ -1,16 +1,30 @@
 const router = require('express').Router();
-const User = require('./userModel');
+const User = require('../models/userModel');
 
 //GET USERS
 router.get('/users', async (req,res)=> {
-    const user = await User.find();
-    res.send(user)
+    if (req.session.user === "admin") {
+
+        const user = await User.find();
+        res.send(user)
+    }
+    else{
+        res.status(401).send("You are not authorized to view this page")
+    }
 })
 
 //GET USERS BY ID
 router.get('/:id', async (req,res)=> {
-    const user = await User.findById(req.params.id);
-    res.send(user);
+
+    if(req.session.user === "admin"){
+        const user = await User.findById(req.params.id);
+        res.send(user);
+
+    }
+    else{
+        res.status(401).send("You are not authorized to view this page")
+    }
+
 })
 
 
@@ -37,7 +51,7 @@ router.post('/createUser', async (req,res)=> {
 //UPDATE A USER
 router.put('/updateUser', async (req,res)=>{
 
-    User.update({
+    User.updateOne({
         name: req.body.name,
         lastname: req.body.lastname,
         username: req.body.username,
