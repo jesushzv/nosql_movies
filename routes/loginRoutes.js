@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/userModel");
 const generateToken = require("../token/genToken");
-router.post("/login", async (req, res) => {
+router.post("/in", async (req, res) => {
   if (req.session.user) {
     res.send({
         message: "You are already logged in",
@@ -26,7 +26,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/logout", (req, res) => {
+router.get("/out", (req, res) => {
   if (!req.session.user) {
     res.send("You are not logged in");
   } else {

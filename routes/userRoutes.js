@@ -2,7 +2,7 @@ const router = require('express').Router();
 const User = require('../models/userModel');
 
 //GET USERS
-router.get('/users', async (req,res)=> {
+router.get('/getAll', async (req,res)=> {
     if (req.session.user === "admin") {
 
         const user = await User.find();

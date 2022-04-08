@@ -28,9 +28,9 @@ app.get('/', (req, res) => {
     res.send('MOVIES SERVICE API by jesushsv & gilbertosantana24');
 });
 
-app.use("/api", require("./routes/movieRoutes"));
+app.use("/movies", require("./routes/movieRoutes"));
 app.use("/users", require("./routes/userRoutes"));
-app.use("/login", require("./routes/loginRoutes"));
+app.use("/log", require("./routes/loginRoutes"));
 
 app.listen(process.env.PORT || 3000, () => {
     console.log('Server started on port 3000');

@@ -2,13 +2,13 @@ const router = require("express").Router();
 const Movie = require("../models/movieModel");
 
 //GET MOVIES
-router.get("/movies", async (req, res) => {
+router.get("/getAll", async (req, res) => {
   const movies = await Movie.find();
   res.send(movies);
 });
 
 //POST MOVIE
-router.post("/movies", async (req, res) => {
+router.post("/postMovie", async (req, res) => {
   session = req.session;
   if (!session.user) {
     res.status(401).json({
@@ -32,7 +32,7 @@ router.post("/movies", async (req, res) => {
 });
 
 //UPDATE A MOVIE
-router.put("/movies", async (req, res) => {
+router.put("/updateMovie", async (req, res) => {
   Movie.updateOne(
     {
       name: req.body.name,
