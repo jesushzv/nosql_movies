@@ -16,8 +16,14 @@ const MovieSchema = new mongoose.Schema({
     box_office: {
         type: Number,
         required: false
+    },
+    img:{
+        data: Buffer,
+        contentType: String
     }
-});
+    }
+);
+
 
 const Movie = mongoose.model("Movie", MovieSchema);
 

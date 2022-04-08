@@ -33,23 +33,49 @@ router.post("/postMovie", async (req, res) => {
 
 //UPDATE A MOVIE
 router.put("/updateMovie", async (req, res) => {
-  Movie.updateOne(
-    {
-      name: req.body.name,
-      rating: req.body.rating,
-      release_year: req.body.release_year,
-      box_office: req.body.box_office,
-    },
-    {
+  if (req.session.admin == false) {
+    res.status(401).json({
+      message: "You must be an admin to update a movie",
+    });
+  }
+  else{
+
+    Movie.updateOne(
+      {
+        name: req.body.name,
+        rating: req.body.rating,
+        release_year: req.body.release_year,
+        box_office: req.body.box_office,
+      },
+      {
+        where: {
+          id: req.body.id,
+        },
+        returning: true,
+        plain: true,
+      }
+    ).then(function (result) {
+      res.send(result[1].dataValues);
+    });
+  }
+
+});
+
+//DELETE A MOVIE
+router.delete("/deleteMovie", async (req, res) => {
+  if (req.session.admin == false) {
+    res.status(401).json({
+      message: "You must be an admin to delete a movie",
+    });
+  } else {
+    Movie.deleteOne({
       where: {
         id: req.body.id,
       },
-      returning: true,
-      plain: true,
-    }
-  ).then(function (result) {
-    res.send(result[1].dataValues);
-  });
+    }).then(function (result) {
+      res.send(result);
+    });
+  }
 });
 
 module.exports = router;

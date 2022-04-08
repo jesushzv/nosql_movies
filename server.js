@@ -5,6 +5,17 @@ const cors = require('cors');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const connectDb = require('./db');
+var multer = require('multer');
+
+//Multer Config
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname + '-' + Date.now())
+    }
+});
 
 //Database Connection
 connectDb();
@@ -25,7 +36,7 @@ app.use(session({
 
 // Index
 app.get('/', (req, res) => {
-    res.send('MOVIES SERVICE API by jesushsv & gilbertosantana24');
+    res.send('MOVIES SERVICE API by jesushzv & gilbertosantana24');
 });
 
 app.use("/movies", require("./routes/movieRoutes"));

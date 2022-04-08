@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const User = require("../models/userModel");
 const generateToken = require("../token/genToken");
+require("dotenv").config();
+
 router.post("/in", async (req, res) => {
   if (req.session.user) {
     res.send({
@@ -11,9 +13,18 @@ router.post("/in", async (req, res) => {
     const user = await User.findOne({ username: req.body.username });
     if (user !== null) {
       if (user.password === req.body.password) {
+
+        if (user.password == process.env.ADMIN_PASSWORD) {
+          var admin = True;
+        }
+        else{
+          var admin = False;
+        }
+
         const userToken = generateToken({
           username: user.username,
           password: user.password,
+          admin: admin
         });
         req.session.user = userToken;
         res.send({message: "Logged in" ,token: userToken });
