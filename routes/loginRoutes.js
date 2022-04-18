@@ -15,10 +15,10 @@ router.post("/in", async (req, res) => {
       if (user.password === req.body.password) {
 
         if (user.password == process.env.ADMIN_PASSWORD) {
-          var admin = True;
+          var admin = true;
         }
         else{
-          var admin = False;
+          var admin = false;
         }
 
         const userToken = generateToken({
